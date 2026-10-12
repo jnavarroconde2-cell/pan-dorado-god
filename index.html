@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pan Dorado GOD - Futurista</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=JetBrains+Mono:wght@700&family=Orbitron:wght@700;900&display=swap');
+:root{--pan:#FFD166;--pan2:#FF8C00;--rosa:#FF1E7A;--cyan:#00F5FF;--ok:#00FFA3;--deep:#040915}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Fredoka';background:var(--deep);color:#fff;overflow-x:hidden}
+#bg{position:fixed;inset:0;z-index:-3;background:radial-gradient(1600px 800px at 15% -20%,#143A6B 0%,#0A1A3A 35%,#040915 80%),radial-gradient(900px 500px at 90% 100%,#FF1E7A18,#0000)}
+#particles,#particles2,#godRays{position:fixed;inset:0;pointer-events:none}#particles{z-index:-1}#particles2{z-index:-1;mix-blend-mode:screen}#godRays{z-index:-2;opacity:.18}
+header{text-align:center;padding:28px 18px 10px}
+.logoGod{width:148px;height:148px;margin:0 auto 14px;border-radius:50%;border:3px solid var(--pan);box-shadow:0 0 40px #FFD16699,0 0 80px #00F5FF55;animation:float 3s infinite;overflow:hidden;display:grid;place-items:center;background:#000;cursor:pointer}
+.logoGod img{width:100%;height:100%;object-fit:cover}
+.badge{display:inline-flex;background:linear-gradient(90deg,var(--pan),var(--pan2),var(--cyan));color:#000;font-weight:900;padding:8px 18px;border-radius:30px;font-size:.78rem;box-shadow:0 10px 30px #ff8c0060;letter-spacing:.5px}
+h1{font-size:clamp(2.8rem,9vw,4.8rem);line-height:.82;margin:16px 0 20px;color:var(--pan);text-shadow:0 8px 0 #000,0 0 60px #ff8c00aa}
+h1 b{background:linear-gradient(90deg,#fff,var(--cyan),var(--pan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block}
+
+/* BOTONES FUTURISTA */
+.topLinks{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.btn-fut{position:relative;border:1px solid var(--cyan);padding:14px 26px;border-radius:0;font-weight:800;background:linear-gradient(180deg,#0A2A4Aee,#040915ee);color:var(--cyan);cursor:pointer;box-shadow:0 0 20px #00F5FF55,inset 0 1px 0 #ffffff33;transition:.3s;font-family:'Orbitron';font-size:.78rem;letter-spacing:1.2px;text-transform:uppercase;clip-path:polygon(10% 0,100% 0,90% 100%,0% 100%);overflow:hidden}
+.btn-fut::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,#00F5FF66,transparent);transition:.6s}
+.btn-fut:hover::before{left:100%}
+.btn-fut:hover{transform:translateY(-3px);box-shadow:0 0 35px #00F5FF99,0 0 60px #00F5FF55;border-color:var(--pan);color:var(--pan)}
+.btn-fut:active{transform:scale(.97)}
+.btn-fut.wa{border-color:#25D366;color:#25D366;box-shadow:0 0 20px #25D36655}.btn-fut.wa:hover{box-shadow:0 0 35px #25D36699;border-color:#25D366}
+.btn-fut.fb{border-color:#1877F2;color:#5AA0FF;box-shadow:0 0 20px #1877F255}.btn-fut.ok{border-color:var(--ok);color:var(--ok);box-shadow:0 0 20px #00FFA355}
+.btn-fut.primary{background:linear-gradient(180deg,#FFD16622,#FF8C0022);border-color:var(--pan);color:var(--pan);box-shadow:0 0 25px #FFD16666}
+
+#hud{position:sticky;top:0;z-index:60;display:grid;grid-template-columns:auto 1fr auto auto auto auto;gap:10px;align-items:center;background:linear-gradient(180deg,#040915f5,#040915e0);backdrop-filter:blur(24px);border-bottom:1px solid var(--cyan);box-shadow:0 0 20px #00F5FF22;padding:11px 12px;font-family:'Orbitron';font-size:.72rem;letter-spacing:.8px}
+#hud::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--pan),transparent);animation:scan 3s linear infinite}
+@keyframes scan{0%{opacity:.3}50%{opacity:1}100%{opacity:.3}}
+.bar{height:14px;background:#132040;border-radius:0;overflow:hidden;box-shadow:inset 0 3px 8px #000c;border:1px solid #ffffff18;clip-path:polygon(4% 0,100% 0,96% 100%,0% 100%)}.bar div{height:100%;width:0%;background:linear-gradient(90deg,var(--pan),var(--ok),var(--cyan),var(--rosa));transition:1.2s;box-shadow:0 0 22px var(--pan)}
+.inv{display:flex;gap:6px}.inv-item{width:30px;height:30px;background:linear-gradient(180deg,#0A1A3A,#040915);border:1px solid var(--cyan);border-radius:0;display:grid;place-items:center;font-size:14px;clip-path:polygon(20% 0,100% 0,80% 100%,0% 100%);transition:.3s;box-shadow:0 0 10px #00F5FF22}.inv-item.has{background:linear-gradient(180deg,#FFD16644,#FF8C0044);border-color:var(--pan);box-shadow:0 0 15px var(--pan);transform:scale(1.1)}
+
+.ch{max-width:960px;margin:30px auto;background:linear-gradient(180deg,#0A1A3A22,#04091588);border:1px solid #00F5FF33;border-radius:0;overflow:hidden;box-shadow:0 0 40px #000a,0 0 0 1px #00F5FF11,0 0 80px #00F5FF08;backdrop-filter:blur(12px);position:relative;clip-path:polygon(1.5% 0,100% 0,98.5% 100%,0% 100%)}
+.ch::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--pan),transparent);opacity:.8}
+.ch::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.4}
+.ch-top{padding:20px 24px 14px;background:linear-gradient(90deg,#00F5FF0f,transparent);border-bottom:1px solid #00F5FF22;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.ch-top h2{color:var(--pan);font-size:1.5rem;font-family:'Orbitron';letter-spacing:.8px;text-shadow:0 0 20px var(--pan)}.ch-top span{font-family:'JetBrains Mono';font-size:.66rem;opacity:.8;background:linear-gradient(180deg,#000a,#0A1A3Aaa);padding:6px 12px;border-radius:0;border:1px solid var(--cyan);color:var(--cyan);clip-path:polygon(8% 0,100% 0,92% 100%,0% 100%);letter-spacing:.5px}
+.ch-body{padding:22px 24px}
+.lore{font-family:'JetBrains Mono';font-size:.77rem;background:linear-gradient(90deg,#0A4A7A55,#0A4A7A00);border-left:2px solid var(--cyan);padding:12px 14px;border-radius:0;margin:12px 0;color:#A5D9F5;line-height:1.6;box-shadow:0 0 20px #00F5FF0f inset;border-right:1px solid #00F5FF11}
+.scene{margin:16px 0;border-radius:0;overflow:hidden;border:1px solid #00F5FF33;background:#00000090;position:relative;box-shadow:0 0 30px #00F5FF11 inset}
+#lake{height:380px;position:relative;overflow:hidden;background:radial-gradient(1000px 450px at 25% 0%,#1E6FAA 0%,#123A62 25%,#0A2440 55%,#061425 100%);touch-action:none}
+.lake-floor{position:absolute;bottom:0;left:0;right:0;height:92px;background:linear-gradient(180deg,#2A1A0A 0%,#1A0F06 100%);opacity:.85}
+.bubble{position:absolute;width:6px;height:6px;background:radial-gradient(circle at 30% 30%,#ffffffdd,#00F5FF88);border-radius:50%;animation:bubbleUp linear infinite;z-index:3}
+@keyframes bubbleUp{from{transform:translateY(0);opacity:.8}to{transform:translateY(-360px);opacity:0}}
+.boat-ultra{position:absolute;width:156px;height:66px;background:linear-gradient(180deg,#EAD9B8 0%,#D4B896 15%,#B89A74 35%,#9A7D58 55%,#7A5D3A 80%,#5A3D22 100%);border-radius:8px 12px 6px 10px;box-shadow:0 12px 0 #000a,0 0 0 2px #3A2512,inset 0 3px 0 #ffffffcc;cursor:grab;z-index:5;transition:.2s;display:flex;flex-direction:column;align-items:center;justify-content:center;user-select:none}
+.boat-ultra b{font-family:'JetBrains Mono';font-weight:900;font-size:.8rem;color:#2E1A08}.boat-ultra small{font-family:'JetBrains Mono';font-size:.58rem;opacity:.75;color:#3A2512}
+.boat-ultra.dragging{transform:scale(1.08) rotate(2deg);box-shadow:0 22px 0 #000a,0 0 0 2px var(--pan),0 0 50px #FFD16699}
+.pato-ultra{position:absolute;left:68%;top:10%;width:98px;height:90px;background:radial-gradient(circle at 30% 25%,#FFF,#E8E6D0 20%,#D2D0B8 45%,#A8A690 75%);border-radius:62% 58% 52% 38%/58% 50% 48% 42%;display:grid;place-items:center;font-size:44px;box-shadow:0 14px 0 #000a;animation:floatPato 2.4s ease-in-out infinite;cursor:pointer;z-index:6}
+.pato-ultra::after{content:'💰';position:absolute;right:-14px;top:-10px;font-size:24px;background:linear-gradient(180deg,#FFD166,#FF8C00);border-radius:50%;width:34px;height:34px;display:grid;place-items:center;border:2px solid #000}
+.oil-drop{position:absolute;width:20px;height:20px;background:radial-gradient(circle at 30% 30%,#FFD166aa,#FF8C00 60%,#00000088);border-radius:50%;box-shadow:0 0 12px #FFD166,0 2px 6px #000a;cursor:pointer;z-index:7;animation:floatOil 2s ease-in-out infinite;border:1px solid #ffffff44}
+.migaWrap{width:210px;height:210px;margin:28px auto;position:relative;cursor:pointer;filter:drop-shadow(0 0 50px #FF8C00)}
+.migaCore{width:100%;height:100%;background:radial-gradient(circle at 28% 26%,#FFF9D9 0%,#FFE9A0 12%,#FFD166 24%,#FFB84D 38%,#FF8C00 56%,#D46A00 72%,#7A3D00 90%);border-radius:40% 60% 55% 45%/45% 42% 58% 60%;box-shadow:inset -22px -22px 36px #00000099,inset 12px 12px 24px #ffffff66;animation:float 3s infinite;position:relative;z-index:2}
+.migaShine{position:absolute;top:18%;left:22%;width:44px;height:30px;background:radial-gradient(ellipse,#ffffffee 0%,#ffffff88 30%,transparent 70%);border-radius:50%;transform:rotate(-18deg);z-index:3}
+.halo{position:absolute;inset:-46px;background:conic-gradient(from 0deg,transparent,#FFD16666 28deg,transparent 60deg,#00F5FF66 110deg,transparent 160deg,#FF1E7A55 210deg,transparent 280deg,#FFD16666 360deg);border-radius:50%;animation:spin 8s linear infinite;filter:blur(1px)}
+.island{height:320px;background:linear-gradient(180deg,#B58D5A 0%,#7A4E26 38%,#3E2410 78%,#1A0F06 100%);position:relative;border-radius:88% 18% 0 0/62% 42% 0 0;border:2px solid #8A5A2E;overflow:hidden}
+.scale{position:absolute;width:60px;height:68px;background:linear-gradient(180deg,#2B1A0D,#120A04);border:1px solid #ffffff2c;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:10px;box-shadow:0 12px 20px #000a;cursor:pointer}.scale.clean{background:linear-gradient(180deg,#FFE9A0,#FF8C00);color:#000;font-weight:800;box-shadow:0 0 34px var(--pan)}
+.clockBox{background:radial-gradient(700px 400px at 50% 0%,#1A1A3E 0%,#0A0A16 100%);border:1px solid var(--pan);border-radius:0;padding:24px;text-align:center;clip-path:polygon(2% 0,100% 0,98% 100%,0% 100%);box-shadow:0 0 40px #ffd16622}
+.clockNum{font-family:'Orbitron';font-size:clamp(3.4rem,12vw,5rem);font-weight:900;color:var(--pan);letter-spacing:14px;text-shadow:0 0 50px var(--pan)}
+.gearRow{display:flex;gap:18px;justify-content:center;margin:20px 0;flex-wrap:wrap}.gear{width:98px;height:98px;border:2px dashed var(--pan);border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#ffffff18,#00000090);font-family:'JetBrains Mono';font-size:.76rem;cursor:pointer;transition:.3s;box-shadow:0 0 20px #FFD16622}.gear.jammed{border-color:var(--rosa);box-shadow:0 0 20px #FF1E7A55;animation:shake.4s infinite}.gear.fixed{border-color:var(--ok);border-style:solid;box-shadow:0 0 32px var(--ok)}
+.input-fut{flex:1;min-width:180px;background:linear-gradient(180deg,#000a,#0A1A3A66);border:1px solid var(--cyan);border-radius:0;padding:12px;color:var(--cyan);font-family:'Orbitron';letter-spacing:.8px;clip-path:polygon(3% 0,100% 0,97% 100%,0% 100%);box-shadow:0 0 15px #00F5FF11 inset}.input-fut::placeholder{color:#00F5FF66}
+.qr-section{margin:22px 0;background:linear-gradient(180deg,#0A1A3A22,#04091566);border:1px solid #00F5FF22;border-radius:0;padding:20px;clip-path:polygon(1% 0,100% 0,99% 100%,0% 100%)}
+.qr-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}@media(max-width:720px){.qr-grid{grid-template-columns:1fr}}
+.qr-card{position:relative;background:radial-gradient(500px at 50% 0%,#ffffff0f,#00000070);border:1px solid #00F5FF22;border-radius:0;padding:18px;text-align:center;clip-path:polygon(2% 0,100% 0,98% 100%,0% 100%)}
+.qr-wrap{position:relative;width:100%;aspect-ratio:1;max-width:320px;margin:0 auto;background:white;border-radius:0;padding:14px;box-shadow:0 0 30px #00F5FF22}
+.qr-wrap img{width:100%;height:100%;object-fit:contain;display:block}
+.qr-logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:72px;height:72px;background:white;border-radius:0;display:grid;place-items:center;box-shadow:0 6px 22px #0006,0 0 0 4px white;border:2px solid #000;overflow:hidden}.qr-logo img{width:100%;height:100%;object-fit:cover}
+.qr-card b{color:var(--pan);display:block;margin:14px 0 6px;font-size:1.1rem;font-family:'Orbitron';letter-spacing:.6px}.qr-card small{font-family:'JetBrains Mono';opacity:.65;font-size:.72rem;display:block}
+.log{font-family:'JetBrains Mono';font-size:.76rem;background:linear-gradient(180deg,#000000b8,#0A1A3A55);border:1px solid #00F5FF22;border-radius:0;padding:14px;max-height:170px;overflow:auto;white-space:pre-wrap;margin-top:14px;line-height:1.5;box-shadow:0 0 20px #00F5FF08 inset}
+.hidden{display:none}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}@keyframes floatPato{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-12px) rotate(1deg)}}@keyframes floatOil{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.15)}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes shake{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+.fall{position:fixed;top:-40px;pointer-events:none;z-index:200;animation:fall linear forwards}@keyframes fall{to{transform:translateY(115vh) rotate(720deg)}}
+.ach{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(120px);background:linear-gradient(90deg,#FFD166,#FF8C00);color:#000;font-weight:900;padding:12px 22px;border-radius:0;box-shadow:0 12px 30px #000a,0 0 30px #FFD166aa;font-family:'Orbitron';font-size:.75rem;z-index:100;transition:.6s cubic-bezier(.2,1,.3,1);border:2px solid #000;clip-path:polygon(5% 0,100% 0,95% 100%,0% 100%);letter-spacing:.8px}.ach.show{transform:translateX(-50%) translateY(0)}
+.soundToggle{position:fixed;top:72px;right:12px;z-index:70;background:linear-gradient(180deg,#0A1A3Aee,#040915ee);border:1px solid var(--cyan);border-radius:0;padding:8px 14px;font-family:'Orbitron';font-size:.65rem;cursor:pointer;color:var(--cyan);letter-spacing:.8px;clip-path:polygon(8% 0,100% 0,92% 100%,0% 100%);box-shadow:0 0 15px #00F5FF33}
+</style>
+</head>
+<body>
+<div id="bg"></div><canvas id="godRays"></canvas><canvas id="particles"></canvas><canvas id="particles2"></canvas>
+<div class="ach" id="ach">🏆 Logro</div>
+<button class="soundToggle" id="soundBtn" onclick="toggleSound()">🔊 SONIDO: ON</button>
+
+<header>
+<div class="logoGod" id="logoGod" onclick="secretClick()"><img src="logo.png" alt="STIKE" onerror="this.src='https://i.imgur.com/8Km9tLL.png'"></div>
+<div class="badge">👑 STIKE EDITS • FUTURISTA HOLOGRÁFICO • GOD TIER</div>
+<h1>Pan Dorado <b>GOD EDITION</b></h1>
+<div class="topLinks">
+<button class="btn-fut wa" onclick="openWA()">💬 Canal WhatsApp</button>
+<button class="btn-fut fb" onclick="openFB()">📘 Facebook</button>
+</div>
+</header>
+
+<div id="hud">
+<span>🍞 <b id="migas">0</b>/5</span>
+<div class="bar"><div id="bar"></div></div>
+<div class="inv"><div class="inv-item" id="invOil">🛢️</div><div class="inv-item" id="invKey">🗝️</div><div class="inv-item" id="invGear">⚙️</div></div>
+<span id="loc">ORILLA FUTURISTA</span>
+<span id="hudClock">13:99</span>
+</div>
+
+<div style="max-width:960px;margin:0 auto;padding:0 14px 100px">
+
+<div class="ch" id="c1"><div class="ch-top"><h2>1. Lago Holográfico [FUTURISTA]</h2><span>300 PARTÍCULAS • BOTONES HOLOGRAMA • SONIDO</span></div><div class="ch-body">
+<div class="lore">FUTURISTA: Interfaz con clip holograma, bordes cortados, neón cyan, scanline. Pantalla y partículas siguen igual GOD original. Botones con efecto deslizamiento luz.</div>
+<div class="scene">
+<div id="lake">
+<div class="lake-floor"></div>
+<div class="oil-drop" style="left:18%;top:22%" data-collected="0" onclick="collectOil(this)"></div>
+<div class="oil-drop" style="left:52%;top:16%" data-collected="0" onclick="collectOil(this)"></div>
+<div class="oil-drop" style="left:82%;top:34%" data-collected="0" onclick="collectOil(this)"></div>
+<div class="boat-ultra" id="boatA" style="left:4%;top:30%" onmousedown="startDrag(event,this)" ontouchstart="startDrag(event,this)"><b>BOTE A GOD</b><small>ARRASTRA • CRUJ</small></div>
+<div class="boat-ultra" id="boatB" style="left:36%;top:60%;width:168px" onmousedown="startDrag(event,this)" ontouchstart="startDrag(event,this)"><b>BOTE B PATO</b><small>DEUDA $47 • CRUJ</small></div>
+<div class="pato-ultra" id="pato" onclick="talkPato()">🦆</div>
+<div class="bubble" style="left:12%;bottom:20px;animation-duration:4.2s"></div><div class="bubble" style="left:34%;bottom:10px;animation-duration:5.1s;width:8px;height:8px"></div><div class="bubble" style="left:72%;bottom:30px;animation-duration:3.8s"></div><div class="bubble" style="left:88%;bottom:15px;animation-duration:4.8s;width:5px;height:5px"></div><div class="bubble" style="left:55%;bottom:40px;animation-duration:6s;width:10px;height:10px"></div>
+</div>
+</div>
+<div class="migaWrap" id="migaWrap" onclick="coger()" style="opacity:.3;pointer-events:none"><div class="halo"></div><div class="migaCore"><div class="migaShine"></div></div></div>
+<div class="log" id="log1">> Sistema futurista iniciado: 300 partículas, god rays, interfaz holograma neón cyan, sonidos individuales listos...</div>
+<div id="rev1" class="hidden"><button class="btn-fut primary" onclick="ir(2)">✅ Lente Holograma Creada → Siguiente</button></div>
+</div></div>
+
+<div class="ch hidden" id="c2"><div class="ch-top"><h2>2. Pato y Pulpo [Neón]</h2><span>ACERTIJO • INPUT FUTURISTA • TIN</span></div><div class="ch-body">
+<div class="lore">Input futurista con clip holograma y neón, sonido typewriter + moneda tin.</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+<input id="riddleInput" class="input-fut" placeholder="RESPUESTA DEUDA..." oninput="playType()">
+<button class="btn-fut primary" onclick="checkRiddle()">Comprobar</button>
+</div>
+<div class="log" id="log2">> Pato: "Si cada viaje son $0.50 y debo $47..."</div>
+<button class="btn-fut hidden" id="to3" onclick="ir(3)">Whoosh → Isla Futurista</button>
+</div></div>
+
+<div class="ch hidden" id="c3"><div class="ch-top"><h2>3. Doña Cascarón 480KG [Holograma]</h2><span>RASPAR • POP • ASCO 4K</span></div><div class="ch-body">
+<div class="lore">Mantén presionado para raspar con sonido asco 4K, interfaz mantiene estilo futurista pero isla sigue orgánica.</div>
+<div class="scene"><div class="island" id="island" onclick="rascar()"><div style="text-align:center;padding-top:16px;font-weight:900;text-shadow:0 3px 0 #000">DOÑA CASCARÓN 480KG - TEXTURA 4K - PERCEBES</div>
+<div class="scale" style="left:14%;top:48%" data-dirty="1" data-hold="0" onmousedown="startHold(this)" ontouchstart="startHold(this)" onmouseup="endHold(this)" ontouchend="endHold(this)">🍞💩<br><span style="font-size:7px" class="holdTxt">MANTÉN 1.5s</span></div>
+<div class="scale" style="left:44%;top:62%" data-dirty="1" data-hold="0" onmousedown="startHold(this)" ontouchstart="startHold(this)" onmouseup="endHold(this)" ontouchend="endHold(this)">🦠🌿<br><span style="font-size:7px" class="holdTxt">MANTÉN 1.5s</span></div>
+<div class="scale" style="left:74%;top:42%" data-dirty="0">✨ LIMPIA</div>
+</div></div>
+<div class="log" id="log3">Mantén presionado - sonido raspado futurista + pop</div>
+<div id="free3" class="hidden"><button class="btn-fut primary" onclick="coger();ir(4)">Tostada-llave Holograma →</button></div>
+</div></div>
+
+<div class="ch hidden" id="c4"><div class="ch-top"><h2>4. Ciudad Burbuja [Alarma Neón]</h2><span>PRESIÓN • 12m • FÍSICA</span></div><div class="ch-body">
+<div class="clockBox"><div class="clockNum" id="clock">13:99</div>
+<div style="margin:10px 0;font-family:'Orbitron';font-size:.8rem">Presión: <b id="press" style="color:#FF1E7A">113% SUBIENDO</b> • Altura: <span id="height">0m / 12m</span> • Tiempo: <span id="timer">15.0s</span></div>
+<div class="gearRow"><div class="gear jammed" id="g1" onclick="fix(this)">⚙️<br>ALGA SECA</div><div class="gear" style="border-style:solid">⚙️<br>OK</div><div class="gear jammed" id="g3" onclick="fix(this)">⚙️<br>PAN DURO</div></div>
+<p>Manecilla: <span id="man">altar pulpo 300 lúmenes</span></p>
+<button class="btn-fut ok" onclick="trade()">Trueque: Sonido Tin Holograma</button>
+</div>
+<div class="log" id="log4">> ¡RÁPIDO! Sonido alarma beep futurista</div>
+<button class="btn-fut hidden" id="to5" onclick="ir(5)">Puerta Whoosh Futurista → Sala</button>
+</div></div>
+
+<div class="ch hidden" id="c5"><div class="ch-top"><h2>5. Tictac [Corazón Holograma]</h2><span>DIÁLOGO • 0.5mA • SONIDO</span></div><div class="ch-body">
+<div style="display:grid;gap:10px;margin-top:12px">
+<button class="btn-fut fb" onclick="dialogChoice(1)">"Todos se van a las 14:00" // triste</button>
+<button class="btn-fut ok" onclick="dialogChoice(2)">"Te quedas con nosotros" // corazón + abrazo</button>
+</div>
+<div class="log" id="log5">Tictac tiembla... sonido tic tac neón</div>
+<div id="ok5" class="hidden"><button class="btn-fut primary" onclick="sync()">💙 Sincronizar 14:00 Holograma</button></div>
+</div></div>
+
+<div class="ch hidden" id="c6"><div class="ch-top"><h2>6. Final Futurista GOD + QR Holograma</h2><span>QR NEÓN • FIX • SONIDO</span></div><div class="ch-body">
+<div id="finalBox" class="hidden" style="padding:24px;border-radius:0;background:linear-gradient(180deg,#FFD16611,#00F5FF0f,#04091588);border:1px solid var(--cyan);box-shadow:0 0 40px #00F5FF11">
+<h3 style="color:var(--pan);font-size:1.5rem;font-family:'Orbitron'">👑 Tesoro Futurista: QR Holograma Neón</h3>
+<div class="qr-section">
+<div class="qr-grid">
+<div class="qr-card"><div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=https://www.whatsapp.com/channel/0029VbCcEXD6LwHl1cFtrm29" alt="QR WhatsApp"><div class="qr-logo wa"><img src="logo.png" alt="STIKE" onerror="this.parentElement.innerText='💬'"></div></div><b>💬 WhatsApp Holograma</b><small>Fix whatsapp:// • Sonido pop</small><button class="btn-fut wa" onclick="openWA()" style="margin-top:12px;width:100%">Abrir Canal Futurista</button></div>
+<div class="qr-card"><div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=https://m.facebook.com/61576726020655" alt="QR Facebook"><div class="qr-logo fb"><img src="logo.png" alt="STIKE" onerror="this.parentElement.innerText='f'"></div></div><b>📘 Facebook Holograma</b><small>Fix fb:// • Sonido pop</small><button class="btn-fut fb" onclick="openFB()" style="margin-top:12px;width:100%">Abrir Facebook Futurista</button></div>
+</div>
+</div>
+</div>
+<button class="btn-fut primary" id="finalBtn" onclick="final()" style="font-size:1rem;padding:16px 28px">🍞 Compartir Hogaza Futurista Final 👑</button>
+</div></div>
+</div>
+</div>
+
+<script>
+let audioCtx=null;let soundOn=true;
+function initAudio(){if(!audioCtx){audioCtx=new (window.AudioContext||window.webkitAudioContext)();}}
+function toggleSound(){soundOn=!soundOn;document.getElementById('soundBtn').innerText=soundOn?'🔊 SONIDO: ON':'🔇 SONIDO: OFF';if(soundOn){initAudio();playSound('ding');}}
+function playTone(freq,type,dur,vol=0.3,slide=0){
+if(!soundOn)return;initAudio();if(audioCtx.state==='suspended')audioCtx.resume();
+let o=audioCtx.createOscillator();let g=audioCtx.createGain();
+o.type=type;o.frequency.setValueAtTime(freq,audioCtx.currentTime);
+if(slide){o.frequency.exponentialRampToValueAtTime(freq*slide,audioCtx.currentTime+dur);}
+g.gain.setValueAtTime(vol,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);
+o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+dur);
+}
+function playNoise(dur,vol=0.2,filterFreq=1000){
+if(!soundOn)return;initAudio();if(audioCtx.state==='suspended')audioCtx.resume();
+let bufferSize=audioCtx.sampleRate*dur;let buffer=audioCtx.createBuffer(1,bufferSize,audioCtx.sampleRate);let data=buffer.getChannelData(0);
+for(let i=0;i<bufferSize;i++){data[i]=(Math.random()*2-1)*Math.pow(1-i/bufferSize,2);}
+let src=audioCtx.createBufferSource();src.buffer=buffer;
+let filter=audioCtx.createBiquadFilter();filter.type='bandpass';filter.frequency.value=filterFreq;
+let gain=audioCtx.createGain();gain.gain.setValueAtTime(vol,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);
+src.connect(filter);filter.connect(gain);gain.connect(audioCtx.destination);src.start();
+}
+function playSound(name){
+if(!soundOn)return;
+switch(name){
+case 'oil':playTone(800,'sine',0.15,0.4,1.8);setTimeout(()=>playTone(1200,'sine',0.25,0.3,0.7),80);break;
+case 'boat':playNoise(0.25,0.25,600);playTone(180,'triangle',0.2,0.2,0.6);break;
+case 'boatDrop':playTone(120,'square',0.15,0.3,0.5);break;
+case 'pato':playTone(300,'sawtooth',0.25,0.35,1.6);setTimeout(()=>playTone(450,'sawtooth',0.2,0.25,0.8),120);break;
+case 'coin':playTone(1200,'sine',0.12,0.35,1.5);setTimeout(()=>playTone(1800,'sine',0.25,0.3,1),70);break;
+case 'miga':playNoise(0.15,0.3,2000);setTimeout(()=>{playTone(600,'sine',0.3,0.3,1.4);playTone(900,'sine',0.4,0.25,1.2);},100);break;
+case 'ding':playTone(600,'sine',0.15,0.35,1.8);setTimeout(()=>playTone(900,'sine',0.2,0.35,1.5),120);setTimeout(()=>playTone(1200,'sine',0.35,0.4,1),240);break;
+case 'type':playTone(1200+Math.random()*400,'square',0.04,0.08);break;
+case 'buzz':playTone(150,'sawtooth',0.35,0.3,0.6);break;
+case 'scrape':playNoise(0.35,0.22,300);playTone(90,'sawtooth',0.3,0.2,1.3);break;
+case 'pop':playTone(500,'sine',0.1,0.35,2.2);setTimeout(()=>playTone(1000,'sine',0.15,0.25,1),60);break;
+case 'gear':playTone(200,'square',0.2,0.3,0.7);playNoise(0.2,0.15,800);break;
+case 'alarm':playTone(880,'square',0.15,0.25);setTimeout(()=>playTone(660,'square',0.15,0.25),200);break;
+case 'whoosh':playNoise(0.4,0.2,1200);playTone(400,'sine',0.4,0.2,2.5);break;
+case 'heartbeat':playTone(60,'sine',0.18,0.4);setTimeout(()=>playTone(60,'sine',0.18,0.4),220);break;
+case 'cry':playTone(400,'sine',0.6,0.2,0.7);break;
+case 'hug':playTone(300,'sine',0.5,0.3,1.4);setTimeout(()=>playTone(450,'sine',0.6,0.3,1.3),200);break;
+case 'bell':playTone(800,'sine',0.8,0.35,1);setTimeout(()=>playTone(1200,'sine',1.2,0.3,1),300);break;
+case 'fanfare':playTone(400,'sawtooth',0.2,0.3,1.5);setTimeout(()=>playTone(500,'sawtooth',0.2,0.3,1.5),180);setTimeout(()=>playTone(600,'sawtooth',0.3,0.35,1.5),360);setTimeout(()=>playTone(800,'sine',0.8,0.4,1),600);break;
+case 'secret':for(let i=0;i<7;i++){setTimeout(()=>playTone(400+i*120,'sine',0.18,0.25,1.3),i*90);}break;
+}
+}
+const FB_WEB="https://m.facebook.com/61576726020655";
+const WA_WEB="https://www.whatsapp.com/channel/0029VbCcEXD6LwHl1cFtrm29";
+function openFB(){playSound('pop');const w=window.open(FB_WEB,"_blank","noopener,noreferrer");if(!w){prompt("Copia:",FB_WEB);return;}setTimeout(()=>{if(/Android/i.test(navigator.userAgent)){try{location.href="intent://m.facebook.com/61576726020655#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url="+encodeURIComponent(FB_WEB)+";end";}catch(e){}}},600);}
+function openWA(){playSound('pop');const w=window.open(WA_WEB,"_blank","noopener,noreferrer");if(!w){prompt("Copia:",WA_WEB);return;}setTimeout(()=>{if(/Android/i.test(navigator.userAgent)){try{location.href="intent://www.whatsapp.com/channel/0029VbCcEXD6LwHl1cFtrm29#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url="+encodeURIComponent(WA_WEB)+";end";}catch(e){}}},600);}
+function makeParticles(id,count,colors){const c=document.getElementById(id);const ctx=c.getContext('2d');function rs(){c.width=innerWidth;c.height=innerHeight}rs();addEventListener('resize',rs);let dots=Array.from({length:count},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*3+0.6,s:Math.random()*0.9+0.1,ph:Math.random()*12,c:colors[Math.floor(Math.random()*colors.length)],a:Math.random()*0.5+0.2}));let t=0;(function loop(){t+=0.01;ctx.clearRect(0,0,c.width,c.height);dots.forEach(d=>{d.y-=d.s;d.x+=Math.sin(t+d.ph)*0.6;if(d.y<0){d.y=c.height;d.x=Math.random()*c.width}ctx.fillStyle=d.c;ctx.globalAlpha=d.a+Math.sin(t+d.ph)*0.15;ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;requestAnimationFrame(loop)})();}
+makeParticles('particles',150,['#FFD166','#FF8C00','#FFE9A0']);makeParticles('particles2',150,['#00F5FF','#00FFA3','#A5D9F5']);
+const rayC=document.getElementById('godRays');const rayCtx=rayC.getContext('2d');function rsR(){rayC.width=innerWidth;rayC.height=innerHeight}rsR();addEventListener('resize',rsR);(function rays(){rayCtx.clearRect(0,0,rayC.width,rayC.height);rayCtx.fillStyle='rgba(255,209,102,0.04)';for(let i=0;i<4;i++){let x=rayC.width*0.2+i*rayC.width*0.2;rayCtx.beginPath();rayCtx.moveTo(x,0);rayCtx.lineTo(x-120,rayC.height);rayCtx.lineTo(x+120,rayC.height);rayCtx.closePath();rayCtx.fill();}requestAnimationFrame(rays)})();
+let migas=0,prog=0,oil=0,boatDist=0,secret=0,cleaned=0,fixed=0,pressure=113,height=0,timer=15,tInt=null;
+function showAch(txt){const el=document.getElementById('ach');el.innerText=txt;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);}
+function upd(p){if(p>prog){prog=p;document.getElementById('bar').style.width=prog+'%'}};
+function collectOil(el){if(el.dataset.collected=='1')return;el.dataset.collected='1';oil++;playSound('oil');el.style.transform='scale(0)';el.style.opacity='0';document.getElementById('invOil').classList.add('has');document.getElementById('log1').innerText+=`\n> Aceite ${oil}/3 blup`;showAch(`🛢️ Aceite ${oil}/3`);checkMiga();}
+function startDrag(e,boat){e.preventDefault();playSound('boat');let isTouch=e.touches;let startX=isTouch?e.touches[0].clientX:e.clientX;let startLeft=boat.offsetLeft;boat.classList.add('dragging');function move(ev){let curX=isTouch?ev.touches[0].clientX:ev.clientX;let dx=curX-startX;boat.style.left=(startLeft+dx)+'px';if(Math.abs(dx)%30<2)playSound('boat');checkBoatDist();}function up(){boat.classList.remove('dragging');playSound('boatDrop');document.removeEventListener('mousemove',move);document.removeEventListener('mouseup',up);document.removeEventListener('touchmove',move);document.removeEventListener('touchend',up);}document.addEventListener('mousemove',move);document.addEventListener('mouseup',up);document.addEventListener('touchmove',move,{passive:false});document.addEventListener('touchend',up);}
+function checkBoatDist(){let a=document.getElementById('boatA');let b=document.getElementById('boatB');let d=Math.abs(a.offsetLeft-b.offsetLeft);if(d<40&&boatDist==0){boatDist=1;playSound('coin');document.getElementById('log1').innerText+='\n> ¡Botes juntados! Moneda tin $47';showAch('💰 $47 tin');checkMiga();}}
+function talkPato(){if(oil<3){playSound('pato');document.getElementById('log1').innerText+='\n> Pato cuack: "3 aceites"';return;}if(!boatDist){playSound('pato');document.getElementById('log1').innerText+='\n> Pato cuack: "Junta botes"';return;}playSound('ding');document.getElementById('log1').innerText+='\n> Pato ding: "Toma miga"';checkMiga(true);}
+function checkMiga(force){if((oil>=3&&boatDist)||force){let wrap=document.getElementById('migaWrap');wrap.style.opacity='1';wrap.style.pointerEvents='auto';}}
+function coger(){migas++;playSound('miga');document.getElementById('migas').innerText=migas;document.getElementById('rev1')?.classList.remove('hidden');document.getElementById('log1').innerText+='\n> Miga crunch';showAch('🍞 Miga crunch');upd(26)}
+function ir(n){playSound('whoosh');document.getElementById('c'+n).classList.remove('hidden');document.getElementById('c'+n).scrollIntoView({behavior:'smooth'});document.getElementById('loc').innerText='CAP '+n+' FUTURISTA';upd(n*14)}
+function playType(){playSound('type');}
+function checkRiddle(){let v=document.getElementById('riddleInput').value.trim();if(v=='47'||v=='94'){playSound('coin');document.getElementById('log2').innerText+='\n> Correcto tin!';document.getElementById('to3').classList.remove('hidden');showAch('🧠 Acertijo tin');}else{playSound('buzz');document.getElementById('log2').innerText+='\n> Buzz error';}}
+function secretClick(){secret++;playSound('pop');if(secret>=7){playSound('secret');document.getElementById('invKey').classList.add('has');document.getElementById('log2').innerText+='\n> SECRETO GOD 7 clicks';showAch('🗝️ Llave secreta');secret=0;}}
+let holdTimer=null;
+function startHold(el){if(el.dataset.dirty=='0')return;el.dataset.hold='1';let txt=el.querySelector('.holdTxt');let start=Date.now();playSound('scrape');holdTimer=setInterval(()=>{let e=Date.now()-start;let p=Math.min(e/1500,1);txt.innerText=Math.floor(p*100)+'%';if(Math.random()<0.15)playSound('scrape');if(p>=1){clearInterval(holdTimer);playSound('pop');el.dataset.dirty='0';el.classList.add('clean');el.innerHTML='✨<span style="font-size:8px">LIMPIA</span>';cleaned++;if(cleaned>=2)document.getElementById('free3').classList.remove('hidden');showAch('✨ Pop limpia');}},50);}
+function endHold(el){clearInterval(holdTimer);if(el.dataset.dirty=='1'){el.querySelector('.holdTxt').innerText='MANTÉN 1.5s';}}
+function rascar(){playSound('scrape');}
+function fix(el){playSound('gear');el.classList.remove('jammed');el.classList.add('fixed');el.innerHTML='⚙️<br>LIBRE';fixed++;document.getElementById('invGear').classList.add('has');document.getElementById('log4').innerText+='\n> Engranaje clank';showAch('⚙️ Clank');if(fixed>=2){pressure=100;document.getElementById('press').innerText='100% ESTABLE';clearInterval(tInt);document.getElementById('to5').classList.remove('hidden')}}
+function trade(){playSound('coin');if(migas<1){playSound('buzz');return}migas--;document.getElementById('migas').innerText=migas;document.getElementById('man').innerText='puesta 300 lúmenes';document.getElementById('log4').innerText+='\n> Trueque tin';if(fixed>=2)document.getElementById('to5').classList.remove('hidden')}
+function dialogChoice(n){if(n==1){playSound('cry');document.getElementById('log5').innerText+='\n> Tictac llanto';showAch('💔 Llanto');}else{playSound('heartbeat');setTimeout(()=>playSound('hug'),400);document.getElementById('log5').innerText+='\n> Corazón + abrazo warm';document.getElementById('ok5').classList.remove('hidden');showAch('💙 Corazón + abrazo');}}
+function sync(){playSound('bell');document.getElementById('clock').innerText='14:00';document.getElementById('hudClock').innerText='14:00 ✅';document.getElementById('press').innerText='100% SINCRONIZADO GOD';ir(6);upd(94);showAch('🔔 Bell 14:00');}
+function startPressure(){if(tInt)return;tInt=setInterval(()=>{if(fixed>=2){clearInterval(tInt);return;}timer-=0.1;pressure+=0.15;height+=0.04;document.getElementById('timer').innerText=timer.toFixed(1)+'s';document.getElementById('press').innerText=pressure.toFixed(1)+'%';document.getElementById('height').innerText=height.toFixed(1)+'m / 12m';if(Math.floor(timer*10)%10==0)playSound('alarm');if(timer<=0){clearInterval(tInt);playSound('buzz');showAch('💥 BOOM');}},100);}
+document.getElementById('c4').addEventListener('click',startPressure,{once:true});
+function final(){playSound('fanfare');document.getElementById('finalBox').classList.remove('hidden');document.getElementById('finalBtn').style.display='none';upd(100);for(let i=0;i<80;i++){let d=document.createElement('div');d.className='fall';d.innerText=Math.random()>0.5?'🍞':'✨';d.style.left=Math.random()*100+'vw';d.style.animationDuration=(2+Math.random()*3)+'s';d.style.fontSize=(22+Math.random()*20)+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),6000)}showAch('👑 FANFARRE GOD');}
+document.addEventListener('click',()=>{if(!audioCtx)initAudio();},{once:true});
+</script>
+</body>
+  </html>
