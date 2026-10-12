@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pan Dorado - Orilla Futurista</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=JetBrains+Mono:wght@700&family=Orbitron:wght@700;900&display=swap');
+:root{--pan:#FFD166;--pan2:#FF8C00;--rosa:#FF1E7A;--cyan:#00F5FF;--ok:#00FFA3;--deep:#040915}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Fredoka';background:var(--deep);color:#fff;overflow-x:hidden}
+#bg{position:fixed;inset:0;z-index:-3;background:radial-gradient(1200px 600px at 20% -10%,#143A6B 0%,#0A1A3A 35%,#040915 85%),radial-gradient(800px 500px at 85% 90%,#FF1E7A0f,#0000)}
+#particles,#particles2,#godRays,#mist{position:fixed;inset:0;pointer-events:none}#particles{z-index:-1}#particles2{z-index:-1;mix-blend-mode:screen}#godRays{z-index:-2;opacity:.16}#mist{z-index:-1;opacity:.25}
+header{max-width:1100px;margin:0 auto;text-align:center;padding:18px 16px 10px;display:grid;gap:10px;place-items:center;position:relative}
+.header-top{width:100%;display:flex;justify-content:space-between;align-items:center;max-width:960px}
+.logoGod{width:126px;height:126px;border-radius:50%;border:3px solid var(--pan);box-shadow:0 0 40px #FFD16699,0 0 80px #00F5FF44,0 12px 24px #000a;overflow:hidden;display:grid;place-items:center;background:#000;cursor:pointer;animation:float 3s infinite}
+.logoGod img{width:100%;height:100%;object-fit:cover}
+.badge{display:inline-flex;background:linear-gradient(90deg,#FFD166,#FF8C00 50%,#00F5FF);color:#000;font-weight:900;padding:8px 18px;border-radius:999px;font-size:.76rem;letter-spacing:.5px}
+h1{font-size:clamp(2.2rem,7vw,3.8rem);line-height:.85;color:var(--pan);text-shadow:0 5px 0 #000,0 0 45px #ff8c00aa;text-align:center}
+h1 b{background:linear-gradient(90deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block}
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:4px}
+.btn-fut{position:relative;border:1px solid var(--cyan);padding:12px 20px;background:linear-gradient(180deg,#0A2A4Aee,#040915ee);color:var(--cyan);cursor:pointer;box-shadow:0 0 18px #00F5FF44,inset 0 1px 0 #ffffff22;transition:.25s;font-family:'Orbitron';font-size:.7rem;letter-spacing:1px;text-transform:uppercase;clip-path:polygon(8% 0,100% 0,92% 100%,0% 100%);overflow:hidden}
+.btn-fut::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,#00F5FF55,transparent);transition:.5s}
+.btn-fut:hover::before{left:100%}.btn-fut:hover{transform:translateY(-2px);box-shadow:0 0 28px #00F5FF77;border-color:var(--pan);color:var(--pan)}
+.btn-fut.wa{border-color:#25D366;color:#25D366}.btn-fut.fb{border-color:#1877F2;color:#7AB0FF}.btn-fut.primary{border-color:var(--pan);color:var(--pan);background:linear-gradient(180deg,#FFD16622,#FF8C0018);box-shadow:0 0 22px #FFD16644}
+.soundToggle{background:linear-gradient(180deg,#0A1A3Aee,#040915ee);border:1px solid var(--cyan);padding:7px 12px;font-family:'Orbitron';font-size:.6rem;color:var(--cyan);cursor:pointer;clip-path:polygon(8% 0,100% 0,92% 100%,0% 100%)}
+#hud{position:sticky;top:0;z-index:60;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:auto 1fr auto auto auto;gap:8px;align-items:center;background:linear-gradient(180deg,#040915f8,#040915ee);backdrop-filter:blur(18px);border-bottom:1px solid #00F5FF33;padding:9px 12px;font-family:'Orbitron';font-size:.66rem;letter-spacing:.6px}
+.bar{height:10px;background:#132040;border:1px solid #ffffff18;clip-path:polygon(3% 0,100% 0,97% 100%,0% 100%);overflow:hidden}.bar div{height:100%;width:0%;background:linear-gradient(90deg,var(--pan),var(--ok),var(--cyan));transition:1s}
+.inv{display:flex;gap:5px}.inv-item{width:28px;height:28px;background:#0A1A3A;border:1px solid #00F5FF33;display:grid;place-items:center;font-size:13px;clip-path:polygon(20% 0,100% 0,80% 100%,0% 100%)}.inv-item.has{background:linear-gradient(180deg,#FFD16644,#FF8C0033);border-color:var(--pan);box-shadow:0 0 12px var(--pan)}
+.wrapper{max-width:1100px;margin:0 auto;padding:0 12px 80px;display:grid;gap:22px}
+.ch{background:linear-gradient(180deg,#0A1A3A18,#04091588);border:1px solid #00F5FF22;overflow:hidden;box-shadow:0 0 0 1px #00F5FF08,0 30px 80px #0006;backdrop-filter:blur(10px);clip-path:polygon(.8% 0,100% 0,99.2% 100%,0% 100%)}
+.ch-top{padding:14px 18px 10px;background:linear-gradient(90deg,#00F5FF0d,transparent);border-bottom:1px solid #00F5FF18;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.ch-top h2{color:var(--pan);font-family:'Orbitron';font-size:1.15rem;letter-spacing:.5px}.ch-top span{font-family:'JetBrains Mono';font-size:.6rem;background:#000a;border:1px solid #00F5FF33;color:var(--cyan);padding:4px 8px;clip-path:polygon(6% 0,100% 0,94% 100%,0% 100%)}
+.ch-body{padding:16px 18px;display:grid;gap:12px}
+.lore{font-family:'JetBrains Mono';font-size:.72rem;background:linear-gradient(90deg,#0A4A7A44,#0000);border-left:2px solid var(--cyan);padding:10px 12px;color:#A5D9F5;line-height:1.6}
+.scene{border:1px solid #00F5FF22;background:#00000088;overflow:hidden;position:relative;min-height:320px}
+.scene-label{position:absolute;top:7px;left:9px;z-index:10;font-family:'Orbitron';font-size:.52rem;letter-spacing:.9px;background:#000b;border:1px solid #00F5FF33;color:var(--cyan);padding:3px 7px;clip-path:polygon(6% 0,100% 0,94% 100%,0% 100%)}
+#lake{height:390px;position:relative;background:radial-gradient(900px 400px at 30% 0%,#1E6FAA 0%,#123A62 28%,#0A2440 58%,#061425 100%);overflow:hidden;touch-action:none}
+#lakeCanvas{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.35}
+.lake-floor{position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(180deg,#2F1E0F 0%,#1E1106 50%,#0E0703 100%);z-index:0;border-top:1px solid #ffffff11}
+.bubble{position:absolute;width:6px;height:6px;background:radial-gradient(circle at 30% 30%,#ffffffdd,#00F5FF88);border-radius:50%;animation:bubbleUp linear infinite;z-index:3}
+@keyframes bubbleUp{from{transform:translateY(0);opacity:.8}to{transform:translateY(-390px) translateX(14px);opacity:0}}
+.boat-ultra{position:absolute;width:142px;height:56px;background:linear-gradient(180deg,#EAD9B8 0%,#D4B896 12%,#B89A74 32%,#9A7D58 58%,#7A5D3A 85%,#5A3D22 100%);border-radius:7px 10px 6px 9px;box-shadow:0 10px 0 #000a,0 0 0 2px #3A2512,inset 0 2px 0 #ffffffbb,inset 0 -6px 10px #00000066,0 14px 22px #0008;cursor:grab;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;user-select:none;transition:.2s}
+.boat-ultra b{font-family:'JetBrains Mono';font-weight:900;font-size:.72rem;color:#2E1A08}.boat-ultra small{font-family:'JetBrains Mono';font-size:.5rem;opacity:.7;color:#3A2512}
+.boat-ultra.dragging{transform:scale(1.07) rotate(1.5deg);box-shadow:0 18px 0 #000a,0 0 0 2px var(--pan),0 0 36px #FFD16677;z-index:10}
+.pato-ultra{position:absolute;left:66%;top:12%;width:84px;height:78px;background:radial-gradient(circle at 32% 28%,#FFF,#E8E6D0 22%,#D2D0B8 46%,#A8A690 78%);border-radius:60% 58% 50% 40%/58% 52% 46% 42%;display:grid;place-items:center;font-size:38px;box-shadow:0 12px 0 #000a,0 0 0 1px #ffffff22,inset -8px -8px 16px #00000033,inset 8px 8px 12px #ffffff77;animation:floatPato 2.6s ease-in-out infinite;cursor:pointer;z-index:6}
+.pato-ultra::after{content:'💰';position:absolute;right:-11px;top:-9px;font-size:19px;background:linear-gradient(180deg,#FFD166,#FF8C00);border-radius:50%;width:28px;height:28px;display:grid;place-items:center;border:2px solid #000}
+.oil-drop{position:absolute;width:22px;height:22px;background:radial-gradient(circle at 30% 28%,#FFF6AA 0%,#FFD166 18%,#FF8C00 52%,#A85A00 78%,#3A1E00 100%);border-radius:50%;box-shadow:0 0 14px #FFD166aa,0 0 0 1px #ffffff55,0 3px 8px #000a,inset -4px -4px 8px #00000066,inset 4px 4px 6px #ffffff88;cursor:pointer;z-index:7;animation:floatOil 2.2s ease-in-out infinite}
+.oil-drop::after{content:'';position:absolute;top:3px;left:5px;width:6px;height:6px;background:radial-gradient(circle,#ffffffee,#ffffff00);border-radius:50%}
+.roca-section{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center}@media(max-width:760px){.roca-section{grid-template-columns:1fr}}
+.roca-card{background:linear-gradient(180deg,#0A1A3A22,#00000066);border:1px solid #00F5FF18;padding:12px;display:grid;gap:8px}
+.roca-title{font-family:'Orbitron';font-size:.74rem;color:var(--pan);letter-spacing:.7px;display:flex;gap:7px;align-items:center}
+.roca-title i{width:7px;height:7px;background:var(--pan);box-shadow:0 0 10px var(--pan);display:inline-block;transform:rotate(45deg)}
+.migaWrap{width:100%;max-width:260px;aspect-ratio:1;margin:0 auto;position:relative;cursor:pointer;filter:drop-shadow(0 0 40px #FF8C00aa) drop-shadow(0 18px 24px #000a);transition:.3s}
+.migaWrap:hover{filter:drop-shadow(0 0 60px #FFD166) drop-shadow(0 22px 30px #000a);transform:scale(1.02)}
+.migaWrap.locked{opacity:.32;pointer-events:none;filter:grayscale(.6) blur(1px)}
+.migaCore{width:100%;height:100%;background:radial-gradient(circle at 28% 26%,#FFF9D9 0%,#FFE9A0 10%,#FFD166 22%,#FFB84D 36%,#FF8C00 54%,#D46A00 70%,#8A3D00 86%,#3A1E00 100%);border-radius:42% 58% 54% 46%/46% 42% 58% 54%;box-shadow:inset -24px -24px 38px #00000099,inset 14px 14px 26px #ffffff66,0 0 0 2px #FF8C0033;position:relative;overflow:hidden;animation:float 3.2s ease-in-out infinite}
+.migaShine{position:absolute;top:16%;left:20%;width:44px;height:30px;background:radial-gradient(ellipse,#ffffffee 0%,#ffffff88 28%,transparent 68%);border-radius:50%;transform:rotate(-18deg);z-index:3}
+.poros{position:absolute;inset:0;z-index:2;pointer-events:none}.poros span{position:absolute;background:radial-gradient(circle,#00000044,#00000000);border-radius:50%}
+.halo{position:absolute;inset:-36px;background:conic-gradient(from 0deg,transparent 0deg,#FFD16666 28deg,transparent 60deg,#00F5FF66 110deg,transparent 160deg,#FF1E7A44 210deg,transparent 280deg,#FFD16666 360deg);border-radius:50%;animation:spin 9s linear infinite;filter:blur(.8px)}
+.stats{font-family:'JetBrains Mono';font-size:.66rem;line-height:1.55;color:#A5D9F5}.stats b{color:var(--pan)}
+.progress-mini{height:6px;background:#132040;border:1px solid #ffffff11;margin:5px 0;overflow:hidden;clip-path:polygon(2% 0,100% 0,98% 100%,0% 100%)}.progress-mini div{height:100%;background:linear-gradient(90deg,var(--pan),var(--ok));transition:1s}
+.island{height:320px;background:linear-gradient(180deg,#B58D5A 0%,#8A5D3A 22%,#7A4E26 42%,#5A3520 66%,#3E2410 84%,#1A0F06 100%);position:relative;border-radius:88% 16% 0 0/60% 40% 0 0;border:1px solid #8A5A2E;overflow:hidden}
+.scale{position:absolute;width:58px;height:66px;background:linear-gradient(180deg,#2B1A0D,#120A04);border:1px solid #ffffff22;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:10px;box-shadow:0 10px 18px #000a;cursor:pointer;transition:.3s}.scale.clean{background:linear-gradient(180deg,#FFE9A0,#FF8C00);color:#000;font-weight:800;box-shadow:0 0 24px var(--pan)}
+.clockBox{background:radial-gradient(700px 400px at 50% 0%,#1A1A3E 0%,#0A0A16 100%);border:1px solid var(--pan);padding:20px;text-align:center;clip-path:polygon(1.5% 0,100% 0,98.5% 100%,0% 100%)}
+.clockNum{font-family:'Orbitron';font-size:clamp(2.8rem,10vw,4.2rem);font-weight:900;color:var(--pan);letter-spacing:10px;text-shadow:0 0 40px var(--pan)}
+.gearRow{display:flex;gap:14px;justify-content:center;margin:16px 0;flex-wrap:wrap}.gear{width:88px;height:88px;border:2px dashed var(--pan);border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#ffffff14,#00000088);font-family:'JetBrains Mono';font-size:.68rem;cursor:pointer;transition:.3s}.gear.jammed{border-color:var(--rosa);animation:shake.4s infinite}.gear.fixed{border-color:var(--ok);border-style:solid;box-shadow:0 0 28px var(--ok)}
+.input-fut{flex:1;min-width:150px;background:linear-gradient(180deg,#000a,#0A1A3A55);border:1px solid var(--cyan);padding:10px;color:var(--cyan);font-family:'Orbitron';letter-spacing:.6px;clip-path:polygon(3% 0,100% 0,97% 100%,0% 100%)}
+.qr-section{margin:12px 0;background:linear-gradient(180deg,#0A1A3A18,#04091555);border:1px solid #00F5FF18;padding:14px;clip-path:polygon(.8% 0,100% 0,99.2% 100%,0% 100%)}
+.qr-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:720px){.qr-grid{grid-template-columns:1fr}}
+.qr-card{position:relative;background:radial-gradient(500px at 50% 0%,#ffffff0d,#00000066);border:1px solid #00F5FF18;padding:12px;text-align:center;clip-path:polygon(1.5% 0,100% 0,98.5% 100%,0% 100%)}
+.qr-wrap{position:relative;width:100%;aspect-ratio:1;max-width:280px;margin:0 auto;background:white;padding:10px;box-shadow:0 0 24px #00F5FF18}.qr-wrap img{width:100%;height:100%;object-fit:contain;display:block}
+.qr-logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:white;display:grid;place-items:center;box-shadow:0 4px 18px #0006,0 0 0 4px white;border:2px solid #000;overflow:hidden}.qr-logo img{width:100%;height:100%;object-fit:cover}
+.qr-card b{color:var(--pan);display:block;margin:10px 0 4px;font-family:'Orbitron';font-size:.95rem}.qr-card small{font-family:'JetBrains Mono';opacity:.6;font-size:.64rem;display:block}
+.log{font-family:'JetBrains Mono';font-size:.7rem;background:linear-gradient(180deg,#000000aa,#0A1A3A44);border:1px solid #00F5FF18;padding:10px;max-height:150px;overflow:auto;white-space:pre-wrap;line-height:1.5}
+.hidden{display:none}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes floatPato{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-9px) rotate(1deg)}}@keyframes floatOil{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-6px) scale(1.1)}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes shake{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
+.fall{position:fixed;top:-40px;pointer-events:none;z-index:200;animation:fall linear forwards}@keyframes fall{to{transform:translateY(115vh) rotate(720deg)}}
+.ach{position:fixed;bottom:14px;left:50%;transform:translateX(-50%) translateY(120px);background:linear-gradient(90deg,#FFD166,#FF8C00);color:#000;font-weight:900;padding:9px 16px;border:2px solid #000;font-family:'Orbitron';font-size:.66rem;z-index:100;transition:.6s;clip-path:polygon(4% 0,100% 0,96% 100%,0% 100%)}.ach.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div id="bg"></div><canvas id="godRays"></canvas><canvas id="particles"></canvas><canvas id="particles2"></canvas><canvas id="mist"></canvas>
+<div class="ach" id="ach">🏆 Logro</div>
+
+<header>
+<div class="header-top">
+<div style="width:74px"></div>
+<div class="logoGod" id="logoGod" onclick="secretClick()"><img src="logo.png" alt="STIKE" onerror="this.src='https://i.imgur.com/8Km9tLL.png'"></div>
+<button class="soundToggle" id="soundBtn" onclick="toggleSound()">🔊 SONIDO: ON</button>
+</div>
+<div class="badge">👑 STIKE EDITS • ORILLA FUTURISTA • GOD TIER</div>
+<h1>Pan Dorado <b>GOD EDITION</b></h1>
+<div class="btn-row">
+<button class="btn-fut wa" onclick="openWA()">💬 Canal WhatsApp</button>
+<button class="btn-fut fb" onclick="openFB()">📘 Facebook</button>
+</div>
+</header>
+
+<div id="hud">
+<span>🍞 <b id="migas">0</b>/5</span>
+<div class="bar"><div id="bar"></div></div>
+<div class="inv"><div class="inv-item" id="invOil">🛢️</div><div class="inv-item" id="invKey">🗝️</div><div class="inv-item" id="invGear">⚙️</div></div>
+<span>ORILLA FUTURISTA</span>
+<span id="hudClock">13:99</span>
+</div>
+
+<div class="wrapper">
+
+<div class="ch" id="c1"><div class="ch-top"><h2>1. Lago Holográfico</h2><span>Orilla del Olvido • Marea baja • 13:99</span></div><div class="ch-body">
+<div class="lore">El agua lleva 3 amaneceres sin moverse. Donde antes caían migas, ahora flotan tres esferas que huelen a pan tostado y a aceite viejo. El barquero dejó dos botes a medio amarrar. El pato del muelle vigila, dice que no pasa nadie sin saldar la deuda. La neblina baja trae olor a levadura fermentada. Si logras juntar la luz del lago, podrás ver la forma que duerme bajo el agua.</div>
+
+<div class="scene">
+<span class="scene-label">Profundidad 2.3m • Temp 18°C • Luz 42° • Brisa 0.4 nudos</span>
+<div id="lake">
+<canvas id="lakeCanvas"></canvas>
+<div class="lake-floor"></div>
+<div class="oil-drop" style="left:16%;top:20%" data-collected="0" onclick="collectOil(this)"></div>
+<div class="oil-drop" style="left:48%;top:14%" data-collected="0" onclick="collectOil(this)"></div>
+<div class="oil-drop" style="left:78%;top:28%" data-collected="0" onclick="collectOil(this)"></div>
+<div class="boat-ultra" id="boatA" style="left:3%;top:32%" onmousedown="startDrag(event,this)" ontouchstart="startDrag(event,this)"><b>BOTE A</b><small>ROBLE VIEJO • 12 CLAVOS</small></div>
+<div class="boat-ultra" id="boatB" style="left:34%;top:62%;width:152px" onmousedown="startDrag(event,this)" ontouchstart="startDrag(event,this)"><b>BOTE B PATO</b><small>DEUDA ACTIVA • ALQUITRÁN</small></div>
+<div class="pato-ultra" id="pato" onclick="talkPato()">🦆</div>
+<div class="bubble" style="left:10%;bottom:18px;animation-duration:4s"></div><div class="bubble" style="left:32%;bottom:8px;animation-duration:5s;width:8px;height:8px"></div><div class="bubble" style="left:68%;bottom:22px;animation-duration:3.6s"></div><div class="bubble" style="left:84%;bottom:12px;animation-duration:4.6s;width:5px;height:5px"></div><div class="bubble" style="left:52%;bottom:30px;animation-duration:5.8s;width:9px;height:9px"></div>
+</div>
+</div>
+
+<div class="roca-section">
+<div class="roca-card">
+<div class="roca-title"><i></i> Núcleo Dorado • 150 Lúmenes • 72h Fermento</div>
+<div class="migaWrap locked" id="migaWrap" onclick="coger()">
+<div class="halo"></div>
+<div class="migaCore">
+<div class="migaShine"></div>
+<div class="poros">
+<span style="left:22%;top:28%;width:8px;height:8px"></span>
+<span style="left:58%;top:18%;width:12px;height:10px"></span>
+<span style="left:72%;top:42%;width:6px;height:6px"></span>
+<span style="left:36%;top:62%;width:10px;height:8px"></span>
+<span style="left:18%;top:68%;width:5px;height:5px"></span>
+<span style="left:64%;top:72%;width:9px;height:7px"></span>
+<span style="left:48%;top:38%;width:4px;height:4px;opacity:.6"></span>
+</div>
+</div>
+</div>
+<div style="text-align:center;font-family:'Orbitron';font-size:.5rem;opacity:.5;letter-spacing:.7px">TOCA PARA COSECHAR • CRUNCH + CAMPANA</div>
+</div>
+<div class="roca-card">
+<div class="roca-title"><i></i> Lectura de Campo</div>
+<div class="stats">
+<b>Origen:</b> Masa madre del primer horno<br>
+<b>Fermento:</b> 72 horas bajo tela húmeda<br>
+<b>Poros:</b> 7 micro-cráteres con sombra interna<br>
+<b>Brillo:</b> Reflejo cenital 46px + halo tricolor<br>
+<b>Olor:</b> Mantequilla quemada + levadura vieja<br>
+<b>Estado:</b> <span id="rocaEstado">Dormido bajo el limo, esperando luz</span>
+<div class="progress-mini"><div id="rocaProgress" style="width:0%"></div></div>
+<b>Vibración:</b> 0.4Hz cuando el pato se acerca<br>
+<b>Temperatura:</b> 24°C interior, corteza 31°C<br>
+</div>
+<div style="display:flex;gap:8px;margin-top:6px">
+<button class="btn-fut primary" style="flex:1" onclick="document.getElementById('lake').scrollIntoView({behavior:'smooth'})">Explorar Orilla</button>
+<button class="btn-fut" style="flex:1" onclick="playSound('miga')">Escuchar Núcleo</button>
+</div>
+</div>
+</div>
+
+<div class="log" id="log1">> El lago amaneció sin corriente. Tres luces doradas flotan sobre el limo. Dos botes a medio hundir. Un pato que cobra peaje. El núcleo espera bajo la niebla...</div>
+<div id="rev1" class="hidden"><button class="btn-fut primary" onclick="ir(2)">✅ Lente 42° ensamblada → Avanzar a la charla</button></div>
+</div></div>
+
+<div class="ch hidden" id="c2"><div class="ch-top"><h2>2. El Pato y la Deuda</h2><span>Muelle viejo • 2 botes • 247 objetos perdidos</span></div><div class="ch-body">
+<div class="lore">El pato no es un pato. Es el contable del muelle. Lleva un cuaderno mojado donde anotó cada viaje a cincuenta centavos. Dice que le deben cuarenta y siete y que no se va hasta cobrar. El pulpo del fondo guarda llaves oxidadas entre latas. Si sabes sumar lo que debe, te deja pasar. Si tocas siete veces la campana del logo, algo suena bajo el agua.</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<input id="riddleInput" class="input-fut" placeholder="¿CUÁNTO DEBE?..." oninput="playType()">
+<button class="btn-fut primary" onclick="checkRiddle()">Cobrar</button>
+</div>
+<div class="log" id="log2">> El pato abre su cuaderno mojado: "Cincuenta centavos el cruce, cuarenta y siete me deben..."</div>
+<button class="btn-fut hidden" id="to3" onclick="ir(3)">Corriente baja → Isla</button>
+</div></div>
+
+<div class="ch hidden" id="c3"><div class="ch-top"><h2>3. La Señora del Caparazón</h2><span>480kg • 70db ronquido • Percebes vivos</span></div><div class="ch-body">
+<div class="lore">Duerme boca abajo desde que el horno se apagó. Su espalda es una isla de dos metros cuadrados llena de conchas, algas negras y pan pegado de hace meses. Respira cada seis segundos y cada vez levanta polvo. Para despertarla hay que limpiarle las escamas una por una, manteniendo la mano firme. Si sueltas, se vuelve a ensuciar.</div>
+<div class="scene"><div class="island" onclick="rascar()"><div style="text-align:center;padding-top:14px;font-weight:900;text-shadow:0 2px 0 #000;font-family:'Orbitron';font-size:.76rem;letter-spacing:.7px">DOÑA CASCARÓN - CAPARAZÓN 480KG - SUEÑO PROFUNDO</div>
+<div class="scale" style="left:14%;top:48%" data-dirty="1" onmousedown="startHold(this)" ontouchstart="startHold(this)" onmouseup="endHold(this)" ontouchend="endHold(this)">🍞💩<br><span style="font-size:7px" class="holdTxt">MANTÉN 1.5s</span></div>
+<div class="scale" style="left:44%;top:62%" data-dirty="1" onmousedown="startHold(this)" ontouchstart="startHold(this)" onmouseup="endHold(this)" ontouchend="endHold(this)">🦠🌿<br><span style="font-size:7px" class="holdTxt">MANTÉN 1.5s</span></div>
+<div class="scale" style="left:74%;top:42%" data-dirty="0">✨ LIMPIA</div>
+</div></div>
+<div class="log" id="log3">La señora ronca. 70 decibeles. Cada ronquido mueve el polvo del caparazón.</div>
+<div id="free3" class="hidden"><button class="btn-fut primary" onclick="coger();ir(4)">Llave de miga liberada → Ciudad</button></div>
+</div></div>
+
+<div class="ch hidden" id="c4"><div class="ch-top"><h2>4. Ciudad Bajo la Burbuja</h2><span>Cúpula 12m • Presión 113% • Ascenso lento</span></div><div class="ch-body">
+<div class="lore">Construyeron una cúpula para guardar el aire caliente del horno. Ahora sube sola, dos milímetros por cada punto de presión extra. A ciento trece ya se siente el tirón hacia la superficie. Dos engranajes están trabados con algas secas y pan duro. Si no los liberas en quince segundos, la burbuja se suelta y se lleva todo a doce metros.</div>
+<div class="clockBox"><div class="clockNum" id="clock">13:99</div>
+<div style="margin:8px 0;font-family:'Orbitron';font-size:.72rem">Presión: <b id="press" style="color:#FF1E7A">113% ASCENDIENDO</b> • <span id="height">0m / 12m</span> • <span id="timer">15.0s</span></div>
+<div class="gearRow"><div class="gear jammed" id="g1" onclick="fix(this)">⚙️<br>ALGA SECA</div><div class="gear" style="border-style:solid">⚙️<br>LIBRE</div><div class="gear jammed" id="g3" onclick="fix(this)">⚙️<br>PAN DURO</div></div>
+<p style="font-family:'JetBrains Mono';font-size:.7rem">Manecilla del altar: <span id="man">pulpo dormido • 300 lúmenes</span></p>
+<button class="btn-fut primary" onclick="trade()">Intercambiar miga por manecilla</button>
+</div>
+<div class="log" id="log4">> La cúpula cruje. Sube un poco con cada segundo. Quince segundos antes del tirón final.</div>
+<button class="btn-fut hidden" id="to5" onclick="ir(5)">Puerta de latón → Sala de máquinas</button>
+</div></div>
+
+<div class="ch hidden" id="c5"><div class="ch-top"><h2>5. Tictac</h2><span>Chispa 0.5mA • Abandono • Reloj roto</span></div><div class="ch-body">
+<div class="lore">Tictac se quedó solo cuando todos se fueron a las dos. Su corazón hace un chispazo cada vez que alguien menciona las catorce horas. Si le dices que todos se van, llora y el chispazo se hace más fuerte. Si le dices que se queda con nosotros cuidando el tiempo, se calma y deja de temblar.</div>
+<div style="display:grid;gap:8px">
+<button class="btn-fut fb" onclick="dialogChoice(1)">"Todos se fueron a las 14:00, es normal"</button>
+<button class="btn-fut primary" onclick="dialogChoice(2)">"No te quedas sola, te quedas con nosotros cuidando el tiempo"</button>
+</div>
+<div class="log" id="log5">Tictac hace tic... tac... tic... con chispa de medio miliamperio.</div>
+<div id="ok5" class="hidden"><button class="btn-fut primary" onclick="sync()">💙 Sincronizar las 14:00 y abrazar</button></div>
+</div></div>
+
+<div class="ch hidden" id="c6"><div class="ch-top"><h2>6. El Horno Compartido</h2><span>Horno final • Reparto • Luz cenital</span></div><div class="ch-body">
+<div id="finalBox" class="hidden" style="padding:18px;border:1px solid var(--cyan);background:linear-gradient(180deg,#FFD1660f,#00F5FF0d,#04091588)">
+<h3 style="color:var(--pan);font-family:'Orbitron';font-size:1.2rem">👑 El Pan se Parte y Alcanza Para Todos</h3>
+<div class="qr-section">
+<div class="qr-grid">
+<div class="qr-card"><div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=https://www.whatsapp.com/channel/0029VbCcEXD6LwHl1cFtrm29"><div class="qr-logo wa"><img src="logo.png" onerror="this.parentElement.innerText='💬'"></div></div><b>💬 Canal del Horno</b><small>Pan recién salido • Aviso de hornada</small><button class="btn-fut wa" onclick="openWA()" style="margin-top:8px;width:100%">Abrir Canal</button></div>
+<div class="qr-card"><div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=https://m.facebook.com/61576726020655"><div class="qr-logo fb"><img src="logo.png" onerror="this.parentElement.innerText='f'"></div></div><b>📘 Mesa Común</b><small>Historias del barrio • Fotos del horno</small><button class="btn-fut fb" onclick="openFB()" style="margin-top:8px;width:100%">Abrir Mesa</button></div>
+</div>
+</div>
+</div>
+<button class="btn-fut primary" id="finalBtn" onclick="final()" style="padding:12px 22px">🍞 Partir la hogaza y repartir 👑</button>
+</div></div>
+
+</div>
+</div>
+
+<script>
+let audioCtx=null;let soundOn=true;
+function initAudio(){if(!audioCtx){audioCtx=new(window.AudioContext||window.webkitAudioContext)();}}
+function toggleSound(){soundOn=!soundOn;document.getElementById('soundBtn').innerText=soundOn?'🔊 SONIDO: ON':'🔇 SONIDO: OFF';if(soundOn){initAudio();playSound('ding');}}
+function playTone(f,type,dur,vol=0.3,slide=0){if(!soundOn)return;initAudio();if(audioCtx.state==='suspended')audioCtx.resume();let o=audioCtx.createOscillator();let g=audioCtx.createGain();o.type=type;o.frequency.setValueAtTime(f,audioCtx.currentTime);if(slide)o.frequency.exponentialRampToValueAtTime(f*slide,audioCtx.currentTime+dur);g.gain.setValueAtTime(vol,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+dur);}
+function playNoise(dur,vol=0.2,ff=1000){if(!soundOn)return;initAudio();if(audioCtx.state==='suspended')audioCtx.resume();let bs=audioCtx.sampleRate*dur;let buf=audioCtx.createBuffer(1,bs,audioCtx.sampleRate);let d=buf.getChannelData(0);for(let i=0;i<bs;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/bs,2);let src=audioCtx.createBufferSource();src.buffer=buf;let fl=audioCtx.createBiquadFilter();fl.type='bandpass';fl.frequency.value=ff;let ga=audioCtx.createGain();ga.gain.setValueAtTime(vol,audioCtx.currentTime);ga.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);src.connect(fl);fl.connect(ga);ga.connect(audioCtx.destination);src.start();}
+function playSound(n){if(!soundOn)return;switch(n){
+case 'oil':playTone(800,'sine',0.15,0.4,1.8);setTimeout(()=>playTone(1200,'sine',0.25,0.3,0.7),80);break;
+case 'boat':playNoise(0.25,0.25,600);playTone(180,'triangle',0.2,0.2,0.6);break;
+case 'boatDrop':playTone(120,'square',0.15,0.3,0.5);break;
+case 'pato':playTone(300,'sawtooth',0.25,0.35,1.6);setTimeout(()=>playTone(450,'sawtooth',0.2,0.25,0.8),120);break;
+case 'coin':playTone(1200,'sine',0.12,0.35,1.5);setTimeout(()=>playTone(1800,'sine',0.25,0.3,1),70);break;
+case 'miga':playNoise(0.15,0.3,2000);setTimeout(()=>{playTone(600,'sine',0.3,0.3,1.4);playTone(900,'sine',0.4,0.25,1.2);},100);break;
+case 'ding':playTone(600,'sine',0.15,0.35,1.8);setTimeout(()=>playTone(900,'sine',0.2,0.35,1.5),120);setTimeout(()=>playTone(1200,'sine',0.35,0.4,1),240);break;
+case 'type':playTone(1200+Math.random()*400,'square',0.04,0.08);break;
+case 'buzz':playTone(150,'sawtooth',0.35,0.3,0.6);break;
+case 'scrape':playNoise(0.35,0.22,300);playTone(90,'sawtooth',0.3,0.2,1.3);break;
+case 'pop':playTone(500,'sine',0.1,0.35,2.2);setTimeout(()=>playTone(1000,'sine',0.15,0.25,1),60);break;
+case 'gear':playTone(200,'square',0.2,0.3,0.7);playNoise(0.2,0.15,800);break;
+case 'alarm':playTone(880,'square',0.15,0.25);setTimeout(()=>playTone(660,'square',0.15,0.25),200);break;
+case 'whoosh':playNoise(0.4,0.2,1200);playTone(400,'sine',0.4,0.2,2.5);break;
+case 'heartbeat':playTone(60,'sine',0.18,0.4);setTimeout(()=>playTone(60,'sine',0.18,0.4),220);break;
+case 'cry':playTone(400,'sine',0.6,0.2,0.7);break;
+case 'hug':playTone(300,'sine',0.5,0.3,1.4);setTimeout(()=>playTone(450,'sine',0.6,0.3,1.3),200);break;
+case 'bell':playTone(800,'sine',0.8,0.35,1);setTimeout(()=>playTone(1200,'sine',1.2,0.3,1),300);break;
+case 'fanfare':playTone(400,'sawtooth',0.2,0.3,1.5);setTimeout(()=>playTone(500,'sawtooth',0.2,0.3,1.5),180);setTimeout(()=>playTone(600,'sawtooth',0.3,0.35,1.5),360);setTimeout(()=>playTone(800,'sine',0.8,0.4,1),600);break;
+case 'secret':for(let i=0;i<7;i++)setTimeout(()=>playTone(400+i*120,'sine',0.18,0.25,1.3),i*90);break;
+}}
+const FB_WEB="https://m.facebook.com/61576726020655";const WA_WEB="https://www.whatsapp.com/channel/0029VbCcEXD6LwHl1cFtrm29";
+function openFB(){playSound('pop');const w=window.open(FB_WEB,"_blank","noopener,noreferrer");if(!w){prompt("Copia:",FB_WEB);return;}setTimeout(()=>{if(/Android/i.test(navigator.userAgent)){try{location.href="intent://m.facebook.com/61576726020655#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url="+encodeURIComponent(FB_WEB)+";end";}catch(e){}}},600);}
+function openWA(){playSound('pop');const w=window.open(WA_WEB,"_blank","noopener,noreferrer");if(!w){prompt("Copia:",WA_WEB);return;}setTimeout(()=>{if(/Android/i.test(navigator.userAgent)){try{location.href="intent://www.whatsapp.com/channel/0029VbCcEXD6LwHl1cFtrm29#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url="+encodeURIComponent(WA_WEB)+";end";}catch(e){}}},600);}
+function makeParticles(id,count,colors){const c=document.getElementById(id);const ctx=c.getContext('2d');function rs(){c.width=innerWidth;c.height=innerHeight}rs();addEventListener('resize',rs);let dots=Array.from({length:count},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*3+0.6,s:Math.random()*0.9+0.1,ph:Math.random()*12,c:colors[Math.floor(Math.random()*colors.length)],a:Math.random()*0.5+0.2}));let t=0;(function loop(){t+=0.01;ctx.clearRect(0,0,c.width,c.height);dots.forEach(d=>{d.y-=d.s;d.x+=Math.sin(t+d.ph)*0.6;if(d.y<0){d.y=c.height;d.x=Math.random()*c.width}ctx.fillStyle=d.c;ctx.globalAlpha=d.a+Math.sin(t+d.ph)*0.15;ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;requestAnimationFrame(loop)})();}
+makeParticles('particles',150,['#FFD166','#FF8C00','#FFE9A0']);makeParticles('particles2',150,['#00F5FF','#00FFA3','#A5D9F5']);
+const rayC=document.getElementById('godRays');const rayCtx=rayC.getContext('2d');function rsR(){rayC.width=innerWidth;rayC.height=innerHeight}rsR();addEventListener('resize',rsR);(function rays(){rayCtx.clearRect(0,0,rayC.width,rayC.height);rayCtx.fillStyle='rgba(255,209,102,0.04)';for(let i=0;i<4;i++){let x=rayC.width*0.2+i*rayC.width*0.2;rayCtx.beginPath();rayCtx.moveTo(x,0);rayCtx.lineTo(x-120,rayC.height);rayCtx.lineTo(x+120,rayC.height);rayCtx.closePath();rayCtx.fill();}requestAnimationFrame(rays)})();
+const mistC=document.getElementById('mist');const mistCtx=mistC.getContext('2d');function rsMist(){mistC.width=innerWidth;mistC.height=innerHeight}rsMist();addEventListener('resize',rsMist);(function mist(){mistCtx.clearRect(0,0,mistC.width,mistC.height);let t=Date.now()*0.0004;mistCtx.fillStyle='rgba(0,245,255,0.03)';for(let i=0;i<3;i++){let y=mistC.height*0.2+i*mistC.height*0.3+Math.sin(t+i)*20;mistCtx.fillRect(0,y,mistC.width,40);}requestAnimationFrame(mist)})();
+const lakeC=document.getElementById('lakeCanvas');const lCtx=lakeC.getContext('2d');function drawLake(){if(!lakeC.width)return;lCtx.clearRect(0,0,lakeC.width,lakeC.height);let t=Date.now()*0.001;lCtx.strokeStyle='rgba(0,245,255,0.08)';lCtx.lineWidth=1;for(let y=60;y<lakeC.height-100;y+=28){lCtx.beginPath();for(let x=0;x<lakeC.width;x+=12){let wy=Math.sin(x*0.02+t*1.2+y*0.01)*4;lCtx.lineTo(x,y+wy);}lCtx.stroke();}requestAnimationFrame(drawLake);}setTimeout(()=>{lakeC.width=document.getElementById('lake').offsetWidth;lakeC.height=document.getElementById('lake').offsetHeight;drawLake();},300);
+let migas=0,prog=0,oil=0,boatDist=0,secret=0,cleaned=0,fixed=0,pressure=113,height=0,timer=15,tInt=null;
+function showAch(txt){const el=document.getElementById('ach');el.innerText=txt;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);}
+function upd(p){if(p>prog){prog=p;document.getElementById('bar').style.width=prog+'%';document.getElementById('rocaProgress').style.width=prog+'%';}};
+function collectOil(el){if(el.dataset.collected=='1')return;el.dataset.collected='1';oil++;playSound('oil');el.style.transform='scale(0)';el.style.opacity='0';document.getElementById('invOil').classList.add('has');document.getElementById('log1').innerText+=`\n> Una de las luces se apagó al tocarla. Queda el olor a aceite caliente.`;document.getElementById('rocaEstado').innerText=`${oil}/3 luces recogidas • ${boatDist? 'botes juntos':'botes separados'}`;upd(oil*15);showAch(`🛢️ Luz ${oil}/3`);checkMiga();}
+function startDrag(e,boat){e.preventDefault();playSound('boat');let isTouch=e.touches;let startX=isTouch?e.touches[0].clientX:e.clientX;let startLeft=boat.offsetLeft;boat.classList.add('dragging');function move(ev){let curX=isTouch?ev.touches[0].clientX:ev.clientX;let dx=curX-startX;let newLeft=Math.max(0,Math.min(startLeft+dx,document.getElementById('lake').offsetWidth-boat.offsetWidth));boat.style.left=newLeft+'px';checkBoatDist();}function up(){boat.classList.remove('dragging');playSound('boatDrop');document.removeEventListener('mousemove',move);document.removeEventListener('mouseup',up);document.removeEventListener('touchmove',move);document.removeEventListener('touchend',up);}document.addEventListener('mousemove',move);document.addEventListener('mouseup',up);document.addEventListener('touchmove',move,{passive:false});document.addEventListener('touchend',up);}
+function checkBoatDist(){let a=document.getElementById('boatA');let b=document.getElementById('boatB');let d=Math.abs(a.offsetLeft-b.offsetLeft);if(d<50&&boatDist==0){boatDist=1;playSound('coin');document.getElementById('log1').innerText+=`\n> Los dos botes se tocaron. Algo cayó al agua y sonó a moneda.`;showAch('💰 Deuda saldada');checkMiga();}}
+function talkPato(){if(oil<3){playSound('pato');document.getElementById('log1').innerText+=`\n> El pato niega con el pico: "Faltan luces" `;return;}if(!boatDist){playSound('pato');document.getElementById('log1').innerText+=`\n> "Junta los botes, el cruce está a medias" - dice el pato.`;return;}playSound('ding');document.getElementById('log1').innerText+=`\n> El pato se aparta. "Pasa, pero no olvides el pan" `;checkMiga(true);}
+function checkMiga(force){if((oil>=3&&boatDist)||force){let wrap=document.getElementById('migaWrap');wrap.classList.remove('locked');document.getElementById('rocaEstado').innerText='El núcleo respira. Tócalo para sacarlo del limo.';document.getElementById('rocaProgress').style.width='100%';}}
+function coger(){migas++;playSound('miga');document.getElementById('migas').innerText=migas;document.getElementById('rev1')?.classList.remove('hidden');document.getElementById('log1').innerText+=`\n> Sacaste el núcleo. Pesa, huele a horno viejo y brilla un poco.`;showAch('🍞 Núcleo cosechado');upd(26)}
+function ir(n){playSound('whoosh');document.getElementById('c'+n).classList.remove('hidden');document.getElementById('c'+n).scrollIntoView({behavior:'smooth'});upd(n*14)}
+function playType(){playSound('type');}
+function checkRiddle(){let v=document.getElementById('riddleInput').value.trim();if(v=='47'||v=='94'){playSound('coin');document.getElementById('log2').innerText+='\n> El pato cuenta con el pico y asiente. "Eso es. Cuarenta y siete. Pasa." ';document.getElementById('to3').classList.remove('hidden');showAch('🧠 Deuda cobrada');}else{playSound('buzz');document.getElementById('log2').innerText+='\n> El pato mueve la cabeza. "No, así no me cuadra." ';}}
+function secretClick(){secret++;playSound('pop');if(secret>=7){playSound('secret');document.getElementById('invKey').classList.add('has');document.getElementById('log2').innerText+='\n> Tocaste la campana siete veces. Algo tintinea bajo el agua.';showAch('🗝️ Llave del fondo');secret=0;}}
+let holdTimer=null;
+function startHold(el){if(el.dataset.dirty=='0')return;el.dataset.hold='1';let txt=el.querySelector('.holdTxt');let start=Date.now();playSound('scrape');holdTimer=setInterval(()=>{let e=Date.now()-start;let p=Math.min(e/1500,1);txt.innerText=Math.floor(p*100)+'%';if(Math.random()<0.15)playSound('scrape');if(p>=1){clearInterval(holdTimer);playSound('pop');el.dataset.dirty='0';el.classList.add('clean');el.innerHTML='✨<span style="font-size:8px">LIMPIA</span>';cleaned++;if(cleaned>=2)document.getElementById('free3').classList.remove('hidden');showAch('✨ Escama limpia');}},50);}
+function endHold(el){clearInterval(holdTimer);if(el.dataset.dirty=='1'){el.querySelector('.holdTxt').innerText='MANTÉN 1.5s';}}
+function rascar(){playSound('scrape');}
+function fix(el){playSound('gear');el.classList.remove('jammed');el.classList.add('fixed');el.innerHTML='⚙️<br>LIBRE';fixed++;document.getElementById('invGear').classList.add('has');document.getElementById('log4').innerText+='\n> El engranaje soltó alga seca y volvió a girar.';showAch('⚙️ Engranaje libre');if(fixed>=2){pressure=100;document.getElementById('press').innerText='100% ESTABLE';clearInterval(tInt);document.getElementById('to5').classList.remove('hidden')}}
+function trade(){playSound('coin');if(migas<1){playSound('buzz');return}migas--;document.getElementById('migas').innerText=migas;document.getElementById('man').innerText='pulpo despierto • 300 lúmenes';document.getElementById('log4').innerText+='\n> Dejaste una miga en el altar. El pulpo se movió un poco.';if(fixed>=2)document.getElementById('to5').classList.remove('hidden')}
+function dialogChoice(n){if(n==1){playSound('cry');document.getElementById('log5').innerText+='\n> Tictac llora. La chispa sube a 0.7mA.';showAch('💔 Tictac llora');}else{playSound('heartbeat');setTimeout(()=>playSound('hug'),400);document.getElementById('log5').innerText+='\n> Tictac respira más lento. "¿Me quedo con ustedes entonces?" ';document.getElementById('ok5').classList.remove('hidden');showAch('💙 Tictac tranquilo');}}
+function sync(){playSound('bell');document.getElementById('clock').innerText='14:00';document.getElementById('hudClock').innerText='14:00 ✅';document.getElementById('press').innerText='100% SINCRONIZADO';ir(6);upd(94);showAch('🔔 14:00 en punto');}
+function startPressure(){if(tInt)return;tInt=setInterval(()=>{if(fixed>=2){clearInterval(tInt);return;}timer-=0.1;pressure+=0.15;height+=0.04;document.getElementById('timer').innerText=timer.toFixed(1)+'s';document.getElementById('press').innerText=pressure.toFixed(1)+'%';document.getElementById('height').innerText=height.toFixed(1)+'m / 12m';if(Math.floor(timer*10)%10==0)playSound('alarm');if(timer<=0){clearInterval(tInt);playSound('buzz');showAch('💥 Burbuja suelta');}},100);}
+document.getElementById('c4').addEventListener('click',startPressure,{once:true});
+function final(){playSound('fanfare');document.getElementById('finalBox').classList.remove('hidden');document.getElementById('finalBtn').style.display='none';upd(100);for(let i=0;i<80;i++){let d=document.createElement('div');d.className='fall';d.innerText=Math.random()>0.5?'🍞':'✨';d.style.left=Math.random()*100+'vw';d.style.animationDuration=(2+Math.random()*3)+'s';d.style.fontSize=(22+Math.random()*20)+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),6000)}showAch('👑 Horno compartido');}
+document.addEventListener('click',()=>{if(!audioCtx)initAudio();},{once:true});
+</script>
+</body>
+  </html>
